@@ -12,7 +12,7 @@ import (
 )
 
 func main() {
-	rom, err :=  RetrieveROM(os.Args[1])
+	rom, err := RetrieveROM(os.Args[1])
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
@@ -29,7 +29,7 @@ func main() {
 	numTiles := int(chrRomSize / 16)
 	pages := numTiles / 512 // 512 tiles per page
 
-	chrRom := rom[prgRomSize + 16 : prgRomSize + chrRomSize + 16]
+	chrRom := rom[prgRomSize+16 : prgRomSize+chrRomSize+16]
 	tiles := ConvertChrRom(chrRom)
 
 	fmt.Printf("%s\n", os.Args[1])
@@ -43,13 +43,13 @@ func main() {
 		filename := fmt.Sprintf("%s-%d.png", strings.TrimSuffix(os.Args[1], filepath.Ext(os.Args[1])), i)
 		start := i * 32768 // 32768 pixels per page
 		end := start + 32768
-		CreatePNG(tiles[start:end],  filename)
+		CreatePNG(tiles[start:end], filename)
 	}
 }
 
 func DrawTile(tile []byte, img *image.RGBA, x int, y int) {
 	ox := x
-	white := color.RGBA{255, 255,255,0xff}
+	white := color.RGBA{255, 255, 255, 0xff}
 	grey1 := color.RGBA{128, 128, 128, 0xff}
 	grey2 := color.RGBA{200, 200, 200, 0xff}
 	grey3 := color.RGBA{160, 160, 160, 0xff}
@@ -66,7 +66,7 @@ func DrawTile(tile []byte, img *image.RGBA, x int, y int) {
 
 		img.Set(x, y, pixColor)
 		x += 1
-		if x % 8 == 0 {
+		if x%8 == 0 {
 			x = ox
 			y += 1
 		}
@@ -75,7 +75,7 @@ func DrawTile(tile []byte, img *image.RGBA, x int, y int) {
 
 func CreatePNG(sprites []byte, filename string) {
 	fmt.Printf("Creating %s\n", filename)
-	width :=  128
+	width := 128
 	height := 256
 
 	upLeft := image.Point{0, 0}
@@ -106,15 +106,15 @@ func CreatePNG(sprites []byte, filename string) {
 }
 
 func ConvertChrRom(spriteBytes []byte) []byte {
-	pixels := make([]byte, len(spriteBytes) * 4)
+	pixels := make([]byte, len(spriteBytes)*4)
 	index := 0
 	mask := byte(0x1)
 
 	for i := 0; i < len(spriteBytes); i += 16 {
 		for j := 0; j < 8; j++ {
 			for k := 7; k >= 0; k-- {
-				channel1 := spriteBytes[i + j]
-				channel2 := spriteBytes[i + j + 8]
+				channel1 := spriteBytes[i+j]
+				channel2 := spriteBytes[i+j+8]
 				pixels[index] = ((channel1 >> byte(k)) & mask) + (((channel2 >> byte(k)) & mask) << 1)
 				index++
 			}
@@ -141,7 +141,7 @@ func RetrieveROM(filename string) ([]byte, error) {
 	bytes := make([]byte, size)
 
 	bufr := bufio.NewReader(file)
-	_,err = bufr.Read(bytes)
+	_, err = bufr.Read(bytes)
 
 	return bytes, err
 }

@@ -1,9 +1,9 @@
-#nesprite
+# nesprite
 A simple NES sprite tile viewer written in [Go](https://go.dev/).
 
-###Building
+### Building
 `go build nesprite.go`
-###Running
+### Running
 `./nesprite <path to .nes file>`
 
 The result will be one or more .png images, depending on the size of the 
