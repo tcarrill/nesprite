@@ -23,7 +23,7 @@ we will be using the first tile from Super Mario Bros, shown below.
 ![0x0000 Tile](0x0000.png)
 
 Each pixel (sub-square in the above image) has a 2 bit value formed by combining the bits of bytes located
-a byte apart. Here's an example showing how the first row of the above image is formed.
+a 8 bytes apart in memory. Here's an example showing how the first row of the above image is formed.
 ```
     [0x00]  0  0  0  0  0  0  1  1
     [0x08]  0  0  0  0  0  0  0  0
